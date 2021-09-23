@@ -1,4 +1,4 @@
-package net.lberrymage.controllerapp
+package net.lberrymage.msmcsrobot.controller
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

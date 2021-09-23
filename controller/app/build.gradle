@@ -7,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "net.lberrymage.controllerapp"
+        applicationId "net.lberrymage.msmcsrobot.controller"
         minSdk 30
         targetSdk 31
         versionCode 1

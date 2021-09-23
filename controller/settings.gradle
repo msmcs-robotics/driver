@@ -5,5 +5,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "controllerapp"
+rootProject.name = "controller"
 include ':app'
