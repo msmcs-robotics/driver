@@ -3,7 +3,7 @@
 #include <WiFiUdp.h>
 #include <pb_decode.h>
 
-#include "message.pb.h"
+#include "motor_voltage.pb.h"
 
 const auto BAUD_RATE = 115200;
 const auto LISTEN_PORT = 1496;
@@ -38,14 +38,15 @@ void loop() {
         // buffer is available after calling Udp.parsePacket().
         Udp.read(packet_data, packet_len);
 
-        Message message = Message_init_zero;
+        MotorVoltage voltage = MotorVoltage_init_zero;
         auto stream = pb_istream_from_buffer(packet_data, packet_len);
-        if (!pb_decode(&stream, &Message_msg, &message)) {
+        if (!pb_decode(&stream, &MotorVoltage_msg, &voltage)) {
             Serial.printf(
                 "Warning: Message decoding failed: %s\n",
                 PB_GET_ERROR(&stream));
         } else {
-            Serial.printf("Message weight: %f\n", message.weight);
+            Serial.printf("Left voltage: %d\n", voltage.left);
+            Serial.printf("Right voltage: %d\n", voltage.right);
         }
     }
 }
