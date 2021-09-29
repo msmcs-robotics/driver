@@ -4,7 +4,7 @@
 #include <Wire.h>
 
 const auto BAUD_RATE = 115200;
-const auto CONTROLLER_I2C_ADDRESS = 8;
+const auto HUB_I2C_ADDRESS = 8;
 const auto LISTEN_PORT = 1496;
 
 WiFiUDP Udp;
@@ -38,7 +38,7 @@ void loop() {
         // buffer is available after calling Udp.parsePacket().
         Udp.read(packet_data, packet_len);
 
-        Wire.beginTransmission(CONTROLLER_I2C_ADDRESS);
+        Wire.beginTransmission(HUB_I2C_ADDRESS);
         Wire.write(packet_data, packet_len);
         Wire.endTransmission();
     }
