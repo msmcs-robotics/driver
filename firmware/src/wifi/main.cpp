@@ -1,11 +1,10 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
-#include <pb_decode.h>
-
-#include "motor_voltage.pb.h"
+#include <Wire.h>
 
 const auto BAUD_RATE = 115200;
+const auto CONTROLLER_I2C_ADDRESS = 8;
 const auto LISTEN_PORT = 1496;
 
 WiFiUDP Udp;
@@ -13,6 +12,7 @@ WiFiUDP Udp;
 // cppcheck-suppress unusedFunction
 void setup() {
     Serial.begin(BAUD_RATE);
+    Wire.begin();
 
     if (!WiFi.softAP((const char*)WIFI_SSID, (const char*)WIFI_PASS)) {
         Serial.println("Error: Starting AP failed");
@@ -38,15 +38,8 @@ void loop() {
         // buffer is available after calling Udp.parsePacket().
         Udp.read(packet_data, packet_len);
 
-        MotorVoltage voltage = MotorVoltage_init_zero;
-        auto stream = pb_istream_from_buffer(packet_data, packet_len);
-        if (!pb_decode(&stream, &MotorVoltage_msg, &voltage)) {
-            Serial.printf(
-                "Warning: Message decoding failed: %s\n",
-                PB_GET_ERROR(&stream));
-        } else {
-            Serial.printf("Left voltage: %d\n", voltage.left);
-            Serial.printf("Right voltage: %d\n", voltage.right);
-        }
+        Wire.beginTransmission(CONTROLLER_I2C_ADDRESS);
+        Wire.write(packet_data, packet_len);
+        Wire.endTransmission();
     }
 }
