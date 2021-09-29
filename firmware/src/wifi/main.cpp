@@ -14,7 +14,7 @@ void setup() {
     Serial.begin(BAUD_RATE);
     Wire.begin();
 
-    if (!WiFi.softAP((const char*)WIFI_SSID, (const char*)WIFI_PASS)) {
+    if (!WiFi.softAP(WIFI_SSID, WIFI_PASS)) {
         Serial.println("Error: Starting AP failed");
     } else {
         Serial.println("Started AP");
