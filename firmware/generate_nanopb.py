@@ -9,4 +9,4 @@ env.Execute("$PYTHONEXE -m pip install nanopb")
 if not os.path.exists(GENERATED_DIR):
     os.mkdir(GENERATED_DIR)
 
-env.Execute("nanopb_generator -D src/generated --strip-path -I ../proto ../proto/motor_voltage.proto")
+env.Execute("nanopb_generator -D src/generated --strip-path -I ../proto ../proto/motor_speed.proto")

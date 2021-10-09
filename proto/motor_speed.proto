@@ -5,7 +5,7 @@ option java_multiple_files = true;
 
 // These values will always be between -255 and 255 to correspond to Arduino's
 // analogWrite(). The negative values are for rotating the motor backwards.
-message MotorVoltage {
+message MotorSpeed {
   // This field is declared optional so the overall message always takes space
   // on the wire. If it was not optional and both fields were set to 0, the
   // serialized packet would take up 0 bytes on the wire. The Arduino UDP

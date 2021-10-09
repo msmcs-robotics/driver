@@ -8,8 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private var currentLeftVoltage = 0
-    private var currentRightVoltage = 0
+    private var currentLeftSpeed = 0
+    private var currentRightSpeed = 0
     private lateinit var messageService: UdpMessageService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,34 +21,34 @@ class MainActivity : AppCompatActivity() {
         findViewById<SeekBar>(R.id.left_axis).setOnSeekBarChangeListener(object :
             OnSeekBarChangeListener {
             override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
-                currentLeftVoltage = progress
+                currentLeftSpeed = progress
 
                 lifecycleScope.launch {
-                    messageService.sendVoltage(currentLeftVoltage, currentRightVoltage)
+                    messageService.sendSpeed(currentLeftSpeed, currentRightSpeed)
                 }
             }
 
             override fun onStartTrackingTouch(seekbar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekbar: SeekBar?) {
-                currentLeftVoltage = 0
+                currentLeftSpeed = 0
                 seekbar?.setProgress(0, true)
             }
         })
         findViewById<SeekBar>(R.id.right_axis).setOnSeekBarChangeListener(object :
             OnSeekBarChangeListener {
             override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
-                currentRightVoltage = progress
+                currentRightSpeed = progress
 
                 lifecycleScope.launch {
-                    messageService.sendVoltage(currentLeftVoltage, currentRightVoltage)
+                    messageService.sendSpeed(currentLeftSpeed, currentRightSpeed)
                 }
             }
 
             override fun onStartTrackingTouch(seekbar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekbar: SeekBar?) {
-                currentRightVoltage = 0
+                currentRightSpeed = 0
                 seekbar?.setProgress(0, true)
             }
         })
